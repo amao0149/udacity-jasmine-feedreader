@@ -10,6 +10,17 @@ $(function() {
     /* 这是我们第一个测试用例 - 其中包含了一定数量的测试。这个用例的测试
      * 都是关于 Rss 源的定义的，也就是应用中的 allFeeds 变量。
     */
+
+    function notEmpty(data) {
+        expect(data).toBeDefined();
+        expect(data).not.toBe('');
+    }
+
+    function isUrl(url) {
+        var regularExpressionUrl = /^((ht|f)tps?):\/\/([\w\-]+(\.[\w\-]+)*\/)*[\w\-]+(\.[\w\-]+)*\/?(\?([\w\-\.,@?^=%&:\/~\+#]*)+)?/; // 检查 URL 格式是否正确的正规表达式
+        expect(url).toMatch(regularExpressionUrl); // 检查格式
+    }
+
     describe('RSS Feeds', function() {
         /* 这是我们的第一个测试 - 它用来保证 allFeeds 变量被定义了而且
          * 不是空的。在你开始做这个项目剩下的工作之前最好实验一下这个测试
@@ -17,8 +28,7 @@ $(function() {
          * 页面看看会发生什么。
         */
         it('are defined', function() {
-            expect(allFeeds).toBeDefined();
-            expect(allFeeds.length).not.toBe(0);
+            notEmpty(allFeeds);
         });
 
 
@@ -27,9 +37,8 @@ $(function() {
          */
          it('all source has link', function() {
             allFeeds.forEach(function(feed) {
-                expect(feed.url).toBeDefined();
-                expect(feed.url).not.toBe('');
-            })
+                isUrl(feed.url);
+            });
          });
 
 
